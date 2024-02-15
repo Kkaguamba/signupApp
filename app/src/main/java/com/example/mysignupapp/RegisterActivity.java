@@ -1,5 +1,6 @@
 package com.example.mysignupapp;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     EditText edtfName, edtlName, edtEmail, edtPhone, edtPasswd, edtconfPasswd;
     Button btnRegister;
+    TextView btn;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     NewUser newUser;
@@ -30,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        TextView btn=findViewById(R.id.signin);
+        btn =findViewById(R.id.signin);
         edtfName = findViewById(R.id.fname);
         edtlName = findViewById(R.id.lname);
         edtEmail = findViewById(R.id.email);
@@ -56,19 +58,20 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (fName.isEmpty() || lName.isEmpty() || Email.isEmpty() || Phone.isEmpty()
                         || pass.isEmpty() || confPass.isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Fill in the fields", Toast.LENGTH_LONG).show();
-                }
+                    Toast.makeText(getApplicationContext(),"Fill in the fields",
+                            Toast.LENGTH_LONG).show();
+                } else if (pass.equals(confPass)) {
+                        addNewUser(fName, lName, Email, Phone, pass);
+                        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(i);
 
-                if (pass.equals(confPass)){
-                    addNewUser(fName, lName, Email, Phone, pass);
-
-                }
-                else {
-                    Toast.makeText(getApplicationContext(),"Password do not match.", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Password do not match.",
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });
-        btn.setOnClickListener(v -> startActivity(new Intent(RegisterActivity.this,LoginActivity.class)));
+
     }
     public void addNewUser(String fName, String lName, String Email, String Phone, String Passwd){
         newUser.setfName(fName);
@@ -80,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                databaseReference.setValue(newUser);
+                databaseReference.child(Phone).setValue(newUser);
                 Toast.makeText(getApplicationContext(),"User registered successfully!",
                         Toast.LENGTH_SHORT).show();
             }
