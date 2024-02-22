@@ -135,24 +135,6 @@
         android:textAlignment="center"
         android:gravity="center">
 
-        <TextView
-            android:id="@+id/acc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Already have an account!"
-            android:textColor="@color/white"
-            android:textSize="18dp" />
-
-        <TextView
-            android:id="@+id/signin"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Login"
-            android:textColor="@color/ocean_blue"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-
     </LinearLayout>
     </LinearLayout>
 

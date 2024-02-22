@@ -31,8 +31,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        btn =findViewById(R.id.signin);
         edtfName = findViewById(R.id.fname);
         edtlName = findViewById(R.id.lname);
         edtEmail = findViewById(R.id.email);
@@ -49,19 +47,19 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String pass = edtPasswd.getText().toString();
+                String Pass = edtPasswd.getText().toString();
                 String confPass = edtconfPasswd.getText().toString();
-                String fName = edtfName.getText().toString();
-                String lName = edtlName.getText().toString();
-                String Email = edtEmail.getText().toString();
-                String Phone = edtPhone.getText().toString();
+                String fName = edtfName.getText().toString().trim();
+                String lName = edtlName.getText().toString().trim();
+                String Email = edtEmail.getText().toString().trim();
+                String Phone = edtPhone.getText().toString().trim();
 
                 if (fName.isEmpty() || lName.isEmpty() || Email.isEmpty() || Phone.isEmpty()
-                        || pass.isEmpty() || confPass.isEmpty()){
+                        || Pass.isEmpty() || confPass.isEmpty()){
                     Toast.makeText(getApplicationContext(),"Fill in the fields",
                             Toast.LENGTH_LONG).show();
-                } else if (pass.equals(confPass)) {
-                        addNewUser(fName, lName, Email, Phone, pass);
+                } else if (Pass.equals(confPass)) {
+                        addNewUser(fName,lName,Email,Phone,Pass);
                         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(i);
 
@@ -73,12 +71,12 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
-    public void addNewUser(String fName, String lName, String Email, String Phone, String Passwd){
+    public void addNewUser(String fName, String lName, String Email, String Phone, String Pass){
         newUser.setfName(fName);
         newUser.setlName(lName);
         newUser.setEmail(Email);
         newUser.setPhone(Phone);
-        newUser.setPasswd(Passwd);
+        newUser.setPasswd(Pass);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
